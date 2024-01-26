@@ -1,4 +1,6 @@
-def foo():
+def foo(self, 
+        name, age
+        ):
     pass
 
 def bar():
