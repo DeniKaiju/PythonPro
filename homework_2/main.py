@@ -4,3 +4,6 @@ def foo(self, name, age):
 
 def bar():
     pass
+
+def foo2():
+    pass
