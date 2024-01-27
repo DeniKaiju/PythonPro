@@ -2,8 +2,8 @@ def foo(self, name, age):
     pass
 
 
-def bar():
+def bar(name, age):
     pass
 
-def foo2():
+def foo2(name, age):
     pass
