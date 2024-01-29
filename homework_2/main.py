@@ -7,3 +7,6 @@ def bar(name, age):
 
 def foo2(name, age):
     pass
+
+def foo3(name, age):
+    pass
