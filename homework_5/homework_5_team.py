@@ -5,16 +5,22 @@ team: dict[int, dict] = {
     13: {"name": "Conor", "age": 19}
 }
 
+
 def repr_players(team: dict[int, dict]):
     for number, player in team.items():
-        print(f"Player number: {number}, Name: {player['name']}, Age: {player['age']}")
+        print(f"Player number: {number}, "
+              f"Name: {player['name']}, "
+              f"Age: {player['age']}")
+
 
 def add_player(name: str, age: int, number: int):
     if number in team:
-        print("Player number already exists. Please choose a different number.")
+        print("Player number already exists. "
+              "Please choose a different number.")
     else:
         team[number] = {"name": name, "age": age}
         print(f"Player {name} added successfully.")
+
 
 def del_player(number: int):
     if number not in team:
@@ -23,12 +29,14 @@ def del_player(number: int):
         del team[number]
         print(f"Player with number {number} deleted successfully.")
 
+
 def update_player(name: str, age: int, number: int):
     if number not in team:
         print("Player number does not exist.")
     else:
         team[number] = {"name": name, "age": age}
         print(f"Player with number {number} updated successfully.")
+
 
 def main():
     repr_players(team)
@@ -39,7 +47,7 @@ def main():
         if operation not in operations:
             print(f"Operation '{operation}' is not available\n")
             continue
-        
+
         if operation == "repr":
             repr_players(team)
         elif operation == "add":
@@ -65,6 +73,7 @@ def main():
                 print("Age and number of player must be integers")
         elif operation == "exit":
             break
+
 
 if __name__ == "__main__":
     main()
