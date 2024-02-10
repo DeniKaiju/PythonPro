@@ -1,12 +1,13 @@
-team: dict[int, dict] = {
+from typing import Dict, Any
+
+team: Dict[int, Dict[str, Any]] = {
     1: {"name": "John", "age": 20},
     5: {"name": "Alex", "age": 21},
     7: {"name": "Mattew", "age": 18},
     13: {"name": "Conor", "age": 19}
 }
 
-
-def repr_players(team: dict[int, dict]):
+def repr_players(team: Dict[int, Dict[str, Any]]):
     for number, player in team.items():
         print(f"Player number: {number}, "
               f"Name: {player['name']}, "
