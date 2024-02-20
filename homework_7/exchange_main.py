@@ -12,9 +12,9 @@ def log_exchange_request(currency_from: str, currency_to: str, rate: float):
         "currency_from": currency_from,
         "currency_to": currency_to,
         "rate": rate,
-        "timestamp": timestamp
+        "timestamp": timestamp,
     }
-    with open('logs.json', 'r+') as file:
+    with open("logs.json", "r+") as file:
         data = json.load(file)
         data["results"].append(log_data)
         file.seek(0)
@@ -22,18 +22,24 @@ def log_exchange_request(currency_from: str, currency_to: str, rate: float):
 
 
 def convert(value: float, currency_from: str, currency_to: str) -> float:
-    #coefficient: float = EXCHANGE_RATES[currency_from][currency_to]
-    response: requests.Response = requests.get(
-        f"https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency={currency_from}&to_currency={currency_to}&apikey={ALPHAVANTAGE_API_KEY}"
-    )
+    # coefficient: float = EXCHANGE_RATES[currency_from][currency_to]
+    url = ("https://www.alphavantage.co/query?"
+           f"function=CURRENCY_EXCHANGE_RATE"
+           f"&from_currency={currency_from}"
+           f"&to_currency={currency_to}"
+           F"&apikey={ALPHAVANTAGE_API_KEY}")
+    response: requests.Response = requests.get(url)
     result: Dict[str, Any] = response.json()
-    coefficient: float = float(result["Realtime Currency Exchange Rate"]["5. Exchange Rate"])
+    coefficient: float = float(
+        result["Realtime Currency Exchange Rate"]["5. Exchange Rate"]
+    )
     log_exchange_request(currency_from, currency_to, coefficient)
     return value * coefficient
 
 
-
-def convert_currency(value: float, currency_from: str, currency_to: str) -> float:
+def convert_currency(
+    value: float, currency_from: str, currency_to: str
+) -> float:
     left_in_middle: float = convert(
         value=value,
         currency_from=currency_from,
@@ -66,8 +72,10 @@ class Price:
             return Price(
                 value=(self.value + other.value), currency=self.currency
             )
-        
-        total_in_left_currency = convert_currency(self.value, self.currency, other.currency)
+
+        total_in_left_currency = convert_currency(
+            self.value, self.currency, other.currency
+        )
 
         return Price(value=total_in_left_currency, currency=self.currency)
 
@@ -76,8 +84,10 @@ class Price:
             return Price(
                 value=(self.value - other.value), currency=self.currency
             )
-        
-        total_in_left_currency = convert_currency(self.value, self.currency, other.currency)
+
+        total_in_left_currency = convert_currency(
+            self.value, self.currency, other.currency
+        )
 
         return Price(value=total_in_left_currency, currency=self.currency)
 
@@ -125,6 +135,7 @@ class PaymentProcessor:
             self.shopping_cart[0].price.currency,
         )
         return Price(total_price, self.shopping_cart[0].price.currency)
+
 
 processor = PaymentProcessor()
 
