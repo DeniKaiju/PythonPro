@@ -4,7 +4,13 @@ from exchange_constants import ALPHAVANTAGE_API_KEY, MIDDLE_CURRENCY
 import requests
 import json
 from datetime import datetime
+import os
 
+# Определение пути к текущему каталогу скрипта
+script_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Создание пути к файлу "logs.json" относительно текущего каталога
+log_file_path = os.path.join(script_dir, "logs.json")
 
 def log_exchange_request(currency_from: str, currency_to: str, rate: float):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -14,7 +20,7 @@ def log_exchange_request(currency_from: str, currency_to: str, rate: float):
         "rate": rate,
         "timestamp": timestamp,
     }
-    with open("logs.json", "r+") as file:
+    with open(log_file_path, "r+") as file:
         data = json.load(file)
         data["results"].append(log_data)
         file.seek(0)
